@@ -19,9 +19,20 @@ namespace Oddestodds.Logic
             throw new NotImplementedException();
         }
 
-        public void DeleteOdds(int Id)
+        public void DeleteOdds(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var odd = _context.Odds.Find(id);
+                if (odd == null)
+                    throw new NullReferenceException("Odd not found");
+                _context.Odds.Remove(odd);
+                _context.SaveChanges();
+            }
+            catch(Exception e)
+            {
+
+            }
         }
 
         public void EditOdds(OddsData data)

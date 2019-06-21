@@ -11,7 +11,9 @@ namespace Oddestodds.Web.Hubs
     public class RealTimeHub : Hub
     {
         private readonly IOddsLogic _oddsLogic;
-        const string UpdateOdds = "UpdateOdds";
+        const string actionUpdateOdds = "ActionUpdateOdds";
+        const string actionUpdateSelectedOdds = "ActionUpdateSelectedOdds";
+        const string actionDeleteOdds = "ActionDeleteOdds";
         public RealTimeHub(IOddsLogic oddslogic)
         {
             _oddsLogic = oddslogic;
@@ -31,12 +33,18 @@ namespace Oddestodds.Web.Hubs
         {
             _oddsLogic.EditOdds(data);
             var result = _oddsLogic.GetOdds(data.Select(x => x.Id).ToArray());
-            await Clients.All.SendAsync(UpdateOdds, result);
+            await Clients.All.SendAsync(actionUpdateOdds, result);
+        }
+
+        public async Task ActionDeleteOdds(int id)
+        {
+            _oddsLogic.DeleteOdds(id);
+            await Clients.All.SendAsync(actionDeleteOdds, id);
         }
         public async Task FetchOdds()
         {
             var result = _oddsLogic.GetOdds().ToArray();
-            await Clients.All.SendAsync(UpdateOdds, result);
+            await Clients.All.SendAsync(actionUpdateOdds, result);
         }
         public async Task TestUserConnected()
         {

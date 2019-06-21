@@ -1,9 +1,12 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/RealTimeHub")
     .build();
-const UpdateOdds = "UpdateOdds";
+const ActionUpdateOdds = "ActionUpdateOdds";
+const ActionUpdateSelectedOdds = "ActionUpdateSelectedOdds";
+const ActionDeleteOdds = "ActionDeleteOdds";
 let OddsListStore = [];
 let table = document.getElementById("odds-table");
+
 
 //Connect to Server
 start();
@@ -13,11 +16,23 @@ connection.onclose(function () {
 });
 
 
-connection.on(UpdateOdds, (data) => {
+connection.on(ActionUpdateOdds, (data) => {
     //TODO:Received Updated data
     //TODO:Update UI    
     UpdateSavedOdds(data);
+    RefreshTable(OddsListStore);
 });
+
+connection.on(ActionUpdateSelectedOdds, (data) => {
+
+});
+
+connection.on(ActionDeleteOdds, (data) => {
+    OddsListStore = OddsListStore.filter(x => x.id != data);
+    UpdateSavedOdds(OddsListStore);
+    RefreshTable(OddsListStore);
+});
+
 
 //Methods
 function start() {
@@ -31,9 +46,11 @@ function start() {
 function UpdateSavedOdds(dataList) {
     //TODO: Optimaize, so that the whole page doesnt refresh
     OddsListStore = dataList.concat();
+}
+function RefreshTable(OddsListStore) {
     //Delete all rows
-    const l = table.rows.length;
-    for (let i = 1; i < l; i++) {
+    const length = table.rows.length;
+    for (let i = 1; i < length; i++) {
         table.deleteRow(1)
         console.log(i, table.rows.length)
     }
@@ -59,8 +76,13 @@ function UpdateTableWithOdds(dataList) {
                 let cell5 = row.insertCell(4);
                 cell5.innerHTML = item.draw
                 let cell6 = row.insertCell(5);
-                cell6.innerHTML = "<Button>View</Button>"
+                cell6.innerHTML = "<Button id='" + item.id + "' onclick='HandleDeleteOdds(this)'>Delete</Button>"
             }
         }
     }
+}
+
+function HandleDeleteOdds(elem) {
+    connection.invoke(ActionDeleteOdds, elem.id);
+    console.log("handleing delete", elem.id )
 }
