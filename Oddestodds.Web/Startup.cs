@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Oddestodds.Logic;
+using Oddestodds.Logic.Interfaces;
 
 namespace Oddestodds.Web
 {
@@ -30,9 +32,11 @@ namespace Oddestodds.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+                       
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //Add Application dependecies
+            services.AddTransient<IOddsLogic, OddsLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
