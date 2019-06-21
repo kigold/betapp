@@ -56,7 +56,22 @@ namespace Oddestodds.Logic
 
         public IEnumerable<OddsData> GetOdds(int[] ids)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = _context.Odds.ToList().Select(x => new OddsData
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Away = x.Away,
+                    Home = x.Home,
+                    Draw = x.Draw
+                });
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
     }
 }

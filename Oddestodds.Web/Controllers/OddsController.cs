@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Oddestodds.Logic.DataObjects;
 using Oddestodds.Logic.Interfaces;
 
 namespace Oddestodds.Web.Controllers
@@ -18,8 +19,7 @@ namespace Oddestodds.Web.Controllers
         // GET: Odds
         public ActionResult Index()
         {
-            var odds = _logic.GetOdds();
-            return View(odds);
+            return View(new List<OddsData>());
         }
 
         // GET: Odds/Details/5
