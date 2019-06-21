@@ -9,7 +9,9 @@ namespace Oddestodds.Logic.Interfaces
     {
         void CreateOdds(OddsData data);
         void EditOdds(OddsData data);
+        void EditOdds(List<OddsData> data);
         void DeleteOdds(int Id);
         IEnumerable<OddsData> GetOdds();
+        IEnumerable<OddsData> GetOdds(int[] ids);
     }
 }

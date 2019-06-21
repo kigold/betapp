@@ -29,6 +29,11 @@ namespace Oddestodds.Logic
             throw new NotImplementedException();
         }
 
+        public void EditOdds(List<OddsData> data)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<OddsData> GetOdds()
         {
             try
@@ -47,6 +52,11 @@ namespace Oddestodds.Logic
             {
                 throw;
             }
+        }
+
+        public IEnumerable<OddsData> GetOdds(int[] ids)
+        {
+            throw new NotImplementedException();
         }
     }
 }

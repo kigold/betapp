@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Oddestodds.Data;
 using Oddestodds.Logic;
 using Oddestodds.Logic.Interfaces;
+using Oddestodds.Web.Hubs;
 
 namespace Oddestodds.Web
 {
@@ -37,6 +38,7 @@ namespace Oddestodds.Web
                        
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
             //Add Application dependecies
             var connString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -60,9 +62,14 @@ namespace Oddestodds.Web
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<RealTimeHub>("/RealTimeHub");
+            });
 
             app.UseMvc(routes =>
             {
