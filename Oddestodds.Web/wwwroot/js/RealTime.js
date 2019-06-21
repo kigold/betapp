@@ -2,14 +2,24 @@
     .withUrl("/RealTimeHub")
     .build();
 const UpdateOdds = "UpdateOdds";
-console.log(connection);
+let OddsListStore = [];
+let table = document.getElementById("odds-table");
 
 //Connect to Server
 start();
 connection.onclose(function () {
-
+    //attempts to reconnect when disconnected
     start();
 });
+
+
+connection.on(UpdateOdds, (data) => {
+    //TODO:Received Updated data
+    //TODO:Update UI    
+    UpdateSavedOdds(data);
+});
+
+//Methods
 function start() {
     connection.start().catch((err) => {
         setTimeout(function () {
@@ -18,15 +28,19 @@ function start() {
     });
 }
 
-
-connection.on(UpdateOdds, (data) => {
-    //TODO:Received Updated data
-    //TODO:Update UI
-    UpdateTableWithOdds(data);
-});
+function UpdateSavedOdds(dataList) {
+    //TODO: Optimaize, so that the whole page doesnt refresh
+    OddsListStore = dataList.concat();
+    //Delete all rows
+    const l = table.rows.length;
+    for (let i = 1; i < l; i++) {
+        table.deleteRow(1)
+        console.log(i, table.rows.length)
+    }
+    UpdateTableWithOdds(OddsListStore);
+}
 
 function UpdateTableWithOdds(dataList) {
-    let table = document.getElementById("odds-table");
     if (dataList != undefined && Array.isArray(dataList)) {
         if (table != undefined) {
             console.log(dataList.length)
