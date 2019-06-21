@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Oddestodds.Data;
 using Oddestodds.Logic;
 using Oddestodds.Logic.Interfaces;
 
@@ -36,6 +38,11 @@ namespace Oddestodds.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //Add Application dependecies
+            var connString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(connString);
+            });
             services.AddTransient<IOddsLogic, OddsLogic>();
         }
 

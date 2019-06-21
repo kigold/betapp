@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Oddestodds.Data\Oddestodds.Data.csproj" />
     <ProjectReference Include="..\Oddestodds.Logic\Oddestodds.Logic.csproj" />
   </ItemGroup>
 
