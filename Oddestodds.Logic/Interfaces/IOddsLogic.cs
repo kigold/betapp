@@ -7,7 +7,7 @@ namespace Oddestodds.Logic.Interfaces
 {
     public interface IOddsLogic
     {
-        void CreateOdds(OddsData data);
+        int CreateOdds(OddsData data);
         void EditOdds(OddsData data);
         void EditOdds(List<OddsData> data);
         void DeleteOdds(int id);

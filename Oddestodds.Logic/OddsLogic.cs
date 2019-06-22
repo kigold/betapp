@@ -4,6 +4,7 @@ using Oddestodds.Logic.Interfaces;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Oddestodds.Data.Entities;
 
 namespace Oddestodds.Logic
 {
@@ -14,9 +15,27 @@ namespace Oddestodds.Logic
         {
             _context = context;
         }
-        public void CreateOdds(OddsData data)
+        public int CreateOdds(OddsData data)
         {
-            throw new NotImplementedException();
+            if (data == null)
+                throw new ArgumentNullException();
+            try
+            {
+                var odd = new Odd
+                {
+                    Name = data.Name,
+                    Home = data.Home,
+                    Away = data.Away,
+                    Draw = data.Draw
+                };
+                _context.Odds.Add(odd);
+                _context.SaveChanges();
+                return odd.Id;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
 
         public void DeleteOdds(int id)
@@ -37,7 +56,14 @@ namespace Oddestodds.Logic
 
         public void EditOdds(OddsData data)
         {
-            throw new NotImplementedException();
+            var odd = _context.Odds.Find(data.Id);
+            if (odd == null)
+                throw new NullReferenceException("Odd not found");
+            odd.Name = data.Name;
+            odd.Home = data.Home;
+            odd.Away = data.Away;
+            odd.Draw = data.Draw;
+            _context.SaveChanges();
         }
 
         public void EditOdds(List<OddsData> data)
@@ -69,7 +95,8 @@ namespace Oddestodds.Logic
         {
             try
             {
-                var result = _context.Odds.ToList().Select(x => new OddsData
+                var result = _context.Odds.Where(x => ids.Contains(x.Id))
+                    .ToList().Select(x => new OddsData
                 {
                     Id = x.Id,
                     Name = x.Name,

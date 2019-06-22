@@ -1,0 +1,44 @@
+﻿@model Oddestodds.Logic.DataObjects.OddsData
+
+<h4>OddsData</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Home" class="control-label"></label>
+                <input asp-for="Home" class="form-control" />
+                <span asp-validation-for="Home" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Away" class="control-label"></label>
+                <input asp-for="Away" class="form-control" />
+                <span asp-validation-for="Away" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Draw" class="control-label"></label>
+                <input asp-for="Draw" class="form-control" />
+                <span asp-validation-for="Draw" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="submit-btn" type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
