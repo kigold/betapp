@@ -17,7 +17,7 @@
     "Oddestodds.Web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:51487/Odds",
+      "applicationUrl": "http://localhost:51487",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
