@@ -9,10 +9,10 @@ using Oddestodds.Logic.Interfaces;
 
 namespace Oddestodds.Web.Controllers
 {
-    public class OddsController : Controller
+    public class OddsUserController : Controller
     {
         private readonly IOddsLogic _logic;
-        public OddsController(IOddsLogic logic)
+        public OddsUserController(IOddsLogic logic)
         {
             _logic = logic;
         }

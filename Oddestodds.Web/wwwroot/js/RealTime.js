@@ -18,7 +18,7 @@ let submitBtn = document.getElementById("submit-btn");
 if (submitBtn != undefined) {
     submitBtn.onclick = handleFormSubmit;
 }
-console.log(window.location.pathname);
+//console.log(window.location.pathname);
 
 
 

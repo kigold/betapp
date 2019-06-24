@@ -16,11 +16,6 @@ The application is build on Asp.net Core version 2.2.
 Update the appsettings.json file to reflect your own database connection string.
 Open the Oddestodds.Web project, and locate the appsetting.json file.
 Update the value of the property called "DefaultConnection". Change the value to your own database.
-Then 
-
-run 
-`dotnet ef migrations add MyFirstMigration`
-
 
 
 # Build and Test
