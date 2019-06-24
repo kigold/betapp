@@ -1,13 +1,16 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿//set up signalR connection for real time connection
+const connection = new signalR.HubConnectionBuilder()
     .withUrl("/RealTimeHub")
     .build();
+let connectionRetry = 0;
+const connectionRetryLimit = 10;
+
 const ActionUpdateOdds = "ActionUpdateOdds";
 const ActionCreateModifyOdds = "ActionCreateModifyOdds";
 const ActionCreateOdds = "ActionCreateOdds";
 const ActionEditOdds = "ActionEditOdds";
 const ActionDeleteOdds = "ActionDeleteOdds";
-let connectionRetry = 0;
-const connectionRetryLimit = 10;
+
 let OddsListStore = [];
 let table = document.getElementById("odds-table");
 let submitBtn = document.getElementById("submit-btn");
@@ -15,6 +18,7 @@ let submitBtn = document.getElementById("submit-btn");
 if (submitBtn != undefined) {
     submitBtn.onclick = handleFormSubmit;
 }
+console.log(window.location.pathname);
 
 
 
@@ -101,9 +105,17 @@ function UpdateTableWithOdds(dataList) {
                 let cell5 = row.insertCell(4);
                 cell5.innerHTML = item.draw
                 let cell6 = row.insertCell(5);
+                let selBtnHtml = "<Button class='btn-success' data-name='"+item.name+"' id='" + item.id + "' onclick='HandleSelectOdds(this)'>Select</Button>";
                 let delBtnHtml = "<Button class='btn-danger' id='" + item.id + "' onclick='HandleDeleteOdds(this)'>Delete</Button>";
-                let editBtnHtml = "<a class='btn-info' id='" + item.id + "' href='/OddsHandler/edit/"+item.id+"' >Edit</a>"
-                cell6.innerHTML = delBtnHtml + editBtnHtml;
+                let editBtnHtml = "<Button class='btn-info' id='" + item.id + "' onclick='HandleEditOdds(this)' >Edit</button>"
+                if (window.location.pathname.includes('OddsHandler')) {
+                    //cell6.innerHTML = "<span>" + delBtnHtml + "</span>" + "<span>" + editBtnHtml + "</span>"
+                    cell6.innerHTML = delBtnHtml + editBtnHtml;
+                }
+                else {
+                    cell6.innerHTML = selBtnHtml;
+                }
+                
             }
         }
     }
@@ -111,6 +123,15 @@ function UpdateTableWithOdds(dataList) {
 
 function HandleDeleteOdds(elem) {
     connection.invoke(ActionDeleteOdds, elem.id);
+}
+function HandleEditOdds(elem) {
+    window.location = "/OddsHandler/edit/" + elem.id;
+}
+
+function HandleSelectOdds(elem) {
+    //TODO:
+    console.log(elem.getAttribute('data-name'));
+    window.alert("Selected Odds " + elem.getAttribute('data-name'));
 }
 
 function handleFormSubmit(e) {
