@@ -12,10 +12,23 @@ TODO: Guide users through getting your code up and running on their own system. 
 The application is build on Asp.net Core version 2.2. 
 - [Link to download](https://dotnet.microsoft.com/download)
 
+# Configuration
+Update the appsettings.json file to reflect your own database connection string.
+Open the Oddestodds.Web project, and locate the appsetting.json file.
+Update the value of the property called "DefaultConnection". Change the value to your own database.
+Then 
+
+run 
+`dotnet ef migrations add MyFirstMigration`
+
+
+
 # Build and Test
 Ensure you have asp.net version 2.2 correctly installed on your machine. 
 Enter the following to check your dotnet core version
 `dotnet --version` 
+
+
 To run enter type the following command
 `cd Odestodds.Web`  //move into the folder, "Oddestodds.Web"
 `dotnet run`
